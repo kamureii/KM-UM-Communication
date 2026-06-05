@@ -1,0 +1,49 @@
+# Visual Studio user settings and workspace state
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.VC.opendb
+
+# Build output directories
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+ARM/
+ARM64/
+build/
+out/
+
+# Compiler, linker, and MSBuild artifacts
+*.obj
+*.iobj
+*.ipdb
+*.idb
+*.pdb
+*.ilk
+*.tlog
+*.lastbuildstate
+*.recipe
+*.log
+*.FileListAbsolute.txt
+
+# Built applications and Windows driver packages
+*.exe
+*.dll
+*.lib
+*.exp
+*.sys
+*.cat
+*.cer
+
+# Local deployment artifacts
+Run Files/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+*.swp
+*~
