@@ -1,6 +1,9 @@
 ;
 ; MyFirstDriver.inf
 ;
+; Primitive (software-only, non-PnP) driver package: installs MyFirstDriver.sys as a
+; demand-start kernel service. Run from the driver store (DIRID 13).
+;
 
 [Version]
 Signature="$WINDOWS NT$"
@@ -10,7 +13,6 @@ Provider=%ManufacturerName%
 DriverVer=
 CatalogFile=MyFirstDriver.cat
 PnpLockdown=1
-PrimitiveName = WfpLogSrcIp
 
 [DestinationDirs]
 DefaultDestDir = 13
@@ -19,12 +21,32 @@ DefaultDestDir = 13
 1 = %DiskName%,,,""
 
 [SourceDisksFiles]
+MyFirstDriver.sys = 1,,
 
-;[Manufacturer]
-;%ManufacturerName%=Standard,NT$ARCH$.10.0...16299 ; %13% support introduced in build 16299
+[DefaultInstall.NT$ARCH$]
+CopyFiles = MyFirstDriver_CopyFiles
 
-;[Standard.NT$ARCH$.10.0...16299]
+[DefaultInstall.NT$ARCH$.Services]
+AddService = %ServiceName%,,MyFirstDriver_Service
+
+[DefaultUninstall.NT$ARCH$]
+LegacyUninstall = 1
+
+[DefaultUninstall.NT$ARCH$.Services]
+DelService = %ServiceName%,0x200 ; SPSVCINST_STOPSERVICE
+
+[MyFirstDriver_CopyFiles]
+MyFirstDriver.sys
+
+[MyFirstDriver_Service]
+DisplayName    = %ServiceDisplayName%
+ServiceType    = 1 ; SERVICE_KERNEL_DRIVER
+StartType      = 3 ; SERVICE_DEMAND_START
+ErrorControl   = 1 ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %13%\MyFirstDriver.sys
 
 [Strings]
-ManufacturerName="<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+ManufacturerName="KM-UM Communication Sample"
 DiskName="MyFirstDriver Source Disk"
+ServiceName="MyFirstDriver"
+ServiceDisplayName="MyFirstDriver KM-UM Echo Driver"
